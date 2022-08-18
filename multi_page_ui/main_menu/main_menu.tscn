@@ -1,0 +1,135 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://world_env.tres" type="Environment" id=1]
+[ext_resource path="res://main_menu/3d_background.gd" type="Script" id=4]
+[ext_resource path="res://main_menu/home/home.tscn" type="PackedScene" id=7]
+[ext_resource path="res://main_menu/level_select/level_select.tscn" type="PackedScene" id=8]
+[ext_resource path="res://multi_page_ui/manager.gd" type="Script" id=9]
+[ext_resource path="res://settings_page/settings_page.tscn" type="PackedScene" id=10]
+[ext_resource path="res://controls_page/controls_page.tscn" type="PackedScene" id=11]
+[ext_resource path="res://menu.theme" type="Theme" id=12]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+period = 40.0
+persistence = 0.6
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 40, 40 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.564706, 0.564706, 0.564706, 1 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 1, 1, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.788235, 0.843137, 0.309804, 1 )
+
+[sub_resource type="CylinderMesh" id=6]
+top_radius = 0.3
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0.372549, 0.811765, 0.513726, 1 )
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 0.701961, 0.411765, 0.819608, 1 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.905882, 0.623529, 0.32549, 1 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 0.380392, 0.658824, 0.796078, 1 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.835294, 0.301961, 0.301961, 1 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+theme = ExtResource( 12 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Pages" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Home" parent="Pages" instance=ExtResource( 7 )]
+
+[node name="LevelSelect" parent="Pages" instance=ExtResource( 8 )]
+visible = false
+cords = Vector2( 1, 0 )
+_back_page_name = "Home"
+
+[node name="SettingsPage" parent="Pages" instance=ExtResource( 10 )]
+visible = false
+cords = Vector2( -1, 0 )
+_back_page_name = "Home"
+
+[node name="ControlsPage" parent="Pages" instance=ExtResource( 11 )]
+visible = false
+cords = Vector2( 0, -1 )
+_back_page_name = "Home"
+
+[node name="3DBackground" type="Spatial" parent="."]
+script = ExtResource( 4 )
+_noise = SubResource( 1 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="3DBackground"]
+environment = ExtResource( 1 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="3DBackground/WorldEnvironment"]
+transform = Transform( 0.888476, 0.255723, -0.381072, 0.0321007, 0.793698, 0.607464, 0.457799, -0.55195, 0.696973, 0, 11, 0 )
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="3DBackground/WorldEnvironment"]
+transform = Transform( -0.652816, 0.5138, -0.556633, 0.377354, 0.857723, 0.349162, 0.656837, 0.0178907, -0.75382, 0, 11, 0 )
+light_color = Color( 1, 0.956863, 0.866667, 1 )
+light_energy = 0.5
+
+[node name="Floor" type="MeshInstance" parent="3DBackground"]
+mesh = SubResource( 2 )
+skeleton = NodePath("")
+material/0 = SubResource( 3 )
+
+[node name="Camera" type="Camera" parent="3DBackground"]
+transform = Transform( 0.831469, 0.0628927, -0.552, 0, 0.993572, 0.113204, 0.555571, -0.0941254, 0.826124, -2.26772, 3.11435, 2.89332 )
+
+[node name="Shapes" type="Node" parent="3DBackground"]
+
+[node name="MeshInstance" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -1.55706, 0.5, -2.22115 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -2.55706, 0.934763, -7.22115 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 4.44294, 0.934763, -6.22115 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 8 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 7.51829, 0.934764, -1.2502 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 1.44294, 0.5, -1.22115 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 10 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="3DBackground/Shapes"]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 2.44294, 0.5, 1.77885 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 11 )
